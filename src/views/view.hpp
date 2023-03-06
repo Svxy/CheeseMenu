@@ -65,5 +65,6 @@ namespace big
 		static void player_misc();
 		static void cmd_executor();
 		static void player_vehicle();
+		static void player_attacker();
 	};
 }
