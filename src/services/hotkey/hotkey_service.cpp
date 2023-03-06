@@ -26,6 +26,7 @@ namespace big
 		register_hotkey("fastquit", g.settings.hotkeys.fast_quit, RAGE_JOAAT("fastquit"));
 		register_hotkey("quicksearch", g.settings.hotkeys.cmd_excecutor, RAGE_JOAAT("cmdexecutor"));
 
+
 		g_renderer->add_wndproc_callback([this](HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 			wndproc(static_cast<eKeyState>(msg), wparam);
 		});
@@ -62,8 +63,8 @@ namespace big
 		};
 
 		const auto name_hash = rage::joaat(name);
-		return update_hotkey_map(m_hotkeys[1], name_hash, key) // released
-		    && update_hotkey_map(m_hotkeys[0], name_hash, key);// down
+		return update_hotkey_map(m_hotkeys[1], name_hash, key)  // released
+		    && update_hotkey_map(m_hotkeys[0], name_hash, key); // down
 	}
 
 	void hotkey_service::wndproc(eKeyState state, key_t key)

@@ -172,6 +172,7 @@ namespace big
 		for (const auto& cb : m_wndproc_callbacks)
 			cb(hwnd, msg, wparam, lparam);
 
+
 		ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam);
 	}
 

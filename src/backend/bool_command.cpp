@@ -2,10 +2,10 @@
 
 namespace big
 {
-	bool_command::bool_command(const std::string& name, const std::string& label, const std::string& description, bool& toggle, bool& show_notify) :
+	bool_command::bool_command(const std::string& name, const std::string& label, const std::string& description, bool& toggle, bool show_notify) :
 	    command(name, label, description, std::nullopt),
 	    m_toggle(toggle),
-		 m_show_notify(show_notify)
+	    m_show_notify(show_notify)
 	{
 	}
 
@@ -16,14 +16,16 @@ namespace big
 			if (is_enabled())
 			{
 				m_toggle = false;
+
 				if (m_show_notify)
-					ctx->report_output(std::format("{} has been disabled", m_label))
+					ctx->report_output(std::format("{} has been disabled", m_label));
 			}
 			else
 			{
 				m_toggle = true;
+
 				if (m_show_notify)
-					ctx->report_output(std::format("{} has been enabled", m_label))
+					ctx->report_output(std::format("{} has been enabled", m_label));
 			}
 		}
 		else

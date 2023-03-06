@@ -99,25 +99,25 @@ namespace big
 		g_commands[command]->call(args, ctx);
 	}
 
-	std::vector<command*> command::get_suggestions(std::string& search, const int limit)
+	std::vector<command*> command::get_suggestions(std::string search, const int limit)
 	{
-		auto args = split(text, ' ');
-		if (args.size() == 0 || args[0].empty())
+		std::vector<command*> result_cmds{};
+		for (auto& [hash, command] : g_commands)
 		{
-			if (command->get.label().length() == 0)
+			if (command->get_label().length() == 0)
 				continue;
 
-			std::string cmd_name = command->get_name();
+			std::string cmd_name  = command->get_name();
 			std::string cmd_label = command->get_label();
 
-			// transform to lowercase
+			//transform all strings to lower case
 			std::transform(cmd_name.begin(), cmd_name.end(), cmd_name.begin(), tolower);
 			std::transform(cmd_label.begin(), cmd_label.end(), cmd_label.begin(), tolower);
 			std::transform(search.begin(), search.end(), search.begin(), tolower);
 
-			for (auto% cmd : split(search, ';'))
+			for (auto& cmd : split(search, ';'))
 			{
-				std::string search_label = splig(cmd, ' ')[0];
+				std::string search_label = split(cmd, ' ')[0];
 
 				if (cmd_name.contains(search_label))
 					result_cmds.push_back(command);
@@ -125,6 +125,7 @@ namespace big
 					result_cmds.push_back(command);
 			}
 
+			// apply our maximum vector size..
 			if (result_cmds.size() >= limit)
 				break;
 		}
