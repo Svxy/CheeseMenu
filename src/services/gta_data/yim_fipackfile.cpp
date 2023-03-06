@@ -1,4 +1,4 @@
-#include "cheese_fipackfile.hpp"
+#include "yim_fipackfile.hpp"
 
 #include "gta/fidevice.hpp"
 #include "pointers.hpp"
@@ -6,7 +6,7 @@
 
 namespace big
 {
-	cheese_fipackfile::cheese_fipackfile(rage::fiPackfile* rpf, const std::string& mount_name)
+	yim_fipackfile::yim_fipackfile(rage::fiPackfile* rpf, const std::string& mount_name)
 	{
 		this->rpf        = rpf;
 		this->mount_name = mount_name;
@@ -37,7 +37,7 @@ namespace big
 		return non_dlc_mounted_devices_names;
 	}
 
-	void cheese_fipackfile::for_each_fipackfile(std::function<size_t(cheese_fipackfile& rpf_wrapper)> cb)
+	void yim_fipackfile::for_each_fipackfile(std::function<size_t(yim_fipackfile& rpf_wrapper)> cb)
 	{
 		// the idea is to reuse existing mount points as much as possible because
 		// even when mounting / unmounting properly you'll get file errors
@@ -61,7 +61,7 @@ namespace big
 				break;
 			}
 
-			cheese_fipackfile rpf_wrapper = cheese_fipackfile(rpf, default_mount_name);
+			yim_fipackfile rpf_wrapper = yim_fipackfile(rpf, default_mount_name);
 
 			auto already_mounted = false;
 			for (const auto& non_dlc_mounted_device_name : non_dlc_mounted_devices_names)
@@ -139,7 +139,7 @@ namespace big
 		}
 	}
 
-	std::vector<std::filesystem::path> cheese_fipackfile::get_file_paths(std::string parent)
+	std::vector<std::filesystem::path> yim_fipackfile::get_file_paths(std::string parent)
 	{
 		std::vector<std::filesystem::path> file_paths;
 		if (parent.empty())
@@ -178,7 +178,7 @@ namespace big
 		return file_paths;
 	}
 
-	void cheese_fipackfile::read_file(const std::filesystem::path& path, file_contents_callback&& cb)
+	void yim_fipackfile::read_file(const std::filesystem::path& path, file_contents_callback&& cb)
 	{
 		if (const auto handle = rpf->Open(path.string().c_str(), true); handle != -1)
 		{
@@ -193,7 +193,7 @@ namespace big
 		}
 	}
 
-	void cheese_fipackfile::read_xml_file(const std::filesystem::path& path, std::function<void(pugi::xml_document& doc)> cb)
+	void yim_fipackfile::read_xml_file(const std::filesystem::path& path, std::function<void(pugi::xml_document& doc)> cb)
 	{
 		read_file(path, [&cb](const std::unique_ptr<std::uint8_t[]>& file_content, const int data_size) {
 			if (pugi::xml_document doc; doc.load_buffer(file_content.get(), data_size).status == pugi::xml_parse_status::status_ok)

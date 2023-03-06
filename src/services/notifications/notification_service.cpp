@@ -6,8 +6,8 @@ namespace big
 {
 	notification_service::notification_service()
 	{
-		push("NOTIFICATION_WELCOME_TITLE"_T.data(),
-		    std::vformat("NOTIFICATION_WELCOME_TEXT"_T, std::make_format_args(ImGui::key_names[g.settings.hotkeys.menu_toggle])));
+		push("Welcome!"_T.data(), // NOTIFICATION_WELCOME_TITLE alternative LMAO
+		    std::vformat("Thanks for downloading CheeseMenu!"_T, std::make_format_args(ImGui::key_names[g.settings.hotkeys.menu_toggle])));
 
 		g_notification_service = this;
 	}
