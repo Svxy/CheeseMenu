@@ -55,7 +55,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 
 			    try
 			    {
-				    LOG(INFO) << "Cheese's Menu Initializing";
+				    LOG(INFO) << "CheeseMenu Initializing";
 				    LOGF(INFO, "Git Info\n\tBranch:\t{}\n\tHash:\t{}\n\tDate:\t{}", version::GIT_BRANCH, version::GIT_SHA1, version::GIT_DATE);
 
 				    g_translation_service.init();
