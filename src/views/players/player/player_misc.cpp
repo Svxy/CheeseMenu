@@ -1,6 +1,5 @@
 #include "script/globals/GPBD_FM_3.hpp"
 #include "util/scripts.hpp"
-#include "util/vehicle.hpp"
 #include "views/view.hpp"
 
 namespace big

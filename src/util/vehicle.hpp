@@ -9,6 +9,7 @@
 #include "script.hpp"
 #include "script_global.hpp"
 #include "services/vehicle_helper/vehicle_helper.hpp"
+#include "teleport.hpp"
 
 namespace big::vehicle
 {
@@ -65,7 +66,7 @@ namespace big::vehicle
 			return g_notification_service->push_error("VEHICLE"_T.data(), "VEHICLE_INVALID"_T.data());
 
 		auto vecVehicleLocation = ENTITY::GET_ENTITY_COORDS(veh, true);
-		entity::load_ground_at_3dcoord(vecVehicleLocation);
+		teleport::load_ground_at_3dcoord(vecVehicleLocation);
 
 		if (!entity::take_control_of(veh))
 			return g_notification_service->push_warning("VEHICLE"_T.data(), "VEHICLE_FAILED_CONTROL"_T.data());

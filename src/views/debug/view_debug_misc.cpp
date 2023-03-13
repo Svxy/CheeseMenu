@@ -15,13 +15,15 @@ namespace big
 	{
 		if (ImGui::BeginTabItem("DEBUG_TAB_MISC"_T.data()))
 		{
-			ImGui::Text("Fiber Pool Usage %d/%d", g_fiber_pool->get_used_fibers(), g_used_fibers(), g_fiber_pool->get_total_fibers());
-
-			ImGui::SameLine();
-
-			if (components::button("Reset"))
+			if (components::button("MOV QWORD"))
 			{
-				g_fiber_pool->reset();
+				*static_cast<uint64_t*>(nullptr) = 0;
+				uint64_t i                       = *static_cast<uint64_t*>(nullptr);
+			}
+
+			if (components::button("MOV 0xdead"))
+			{
+				*((unsigned int*)0) = 0xDEAD;
 			}
 
 			if (components::button("Dump entrypoints"))
