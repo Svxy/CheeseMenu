@@ -21,6 +21,7 @@ namespace rage
 	class snConnectToPeerTaskResult;
 	class rlScHandle;
 	class rlQueryPresenceAttributesContext;
+	enum class eThreadState : uint32_t;
 }
 
 namespace datafile_commands
@@ -91,9 +92,9 @@ namespace big::functions
 	using fipackfile_unmount = bool (*)(const char* mount_point);
 
 	using start_get_session_by_gamer_handle = bool (*)(int profile_index, rage::rlGamerHandle* handles, int count, rage::rlSessionByGamerTaskResult* result, int unk, bool* success, rage::rlTaskStatus* state);
-	using start_matchmaking_find_sessions = bool (*)(int profile_index, int available_slots, NetworkGameFilterMatchmakingComponent* m_filter, unsigned int max_sessions, rage::rlSessionInfo* result_sessions, int* result_session_count, rage::rlTaskStatus* state);
-	using start_get_presence_attributes = bool (*)(int profile_index, rage::rlScHandle* handle, rage::rlQueryPresenceAttributesContext* contexts, int count, rage::rlTaskStatus* state);
-	using join_session_by_info = bool (*)(Network* network, rage::rlSessionInfo* info, int unk, int flags, rage::rlGamerHandle* handles, int handlecount);
+	using start_matchmaking_find_sessions   = bool (*)(int profile_index, int available_slots, NetworkGameFilterMatchmakingComponent* m_filter, unsigned int max_sessions, rage::rlSessionInfo* result_sessions, int* result_session_count, rage::rlTaskStatus* state);
+	using start_get_presence_attributes     = bool (*)(int profile_index, rage::rlScHandle* handle, rage::rlQueryPresenceAttributesContext* contexts, int count, rage::rlTaskStatus* state);
+	using join_session_by_info              = bool (*)(Network* network, rage::rlSessionInfo* info, int unk, int flags, rage::rlGamerHandle* handles, int handlecount);
 
 	using generate_uuid = bool (*)(std::uint64_t* uuid);
 
@@ -115,7 +116,7 @@ namespace big::functions
 	using send_remove_gamer_cmd = void (*)(rage::netConnectionManager* net_connection_mgr, rage::netConnectionPeer* player, int connection_id, rage::snMsgRemoveGamersFromSessionCmd* cmd, int flags);
 	using handle_remove_gamer_cmd = void* (*)(rage::snSession* session, rage::snPlayer* origin, rage::snMsgRemoveGamersFromSessionCmd* cmd);
 
-	using script_vm = int (*)(uint64_t* stack, int64_t** scr_globals, rage::scrProgram* program, rage::scrThreadContext* ctx);
+	using script_vm = rage::eThreadState (*)(uint64_t* stack, int64_t** scr_globals, rage::scrProgram* program, rage::scrThreadContext* ctx);
 
 	using encode_session_info = bool (*)(rage::rlSessionInfo* info, char* buffer, int buffer_size, int* bytes_written);
 	using decode_session_info = bool (*)(rage::rlSessionInfo* out_info, char* buffer, int* bytes_read);
@@ -133,4 +134,6 @@ namespace big::functions
 
 	using get_next_carriage      = void* (*)(void* carriage);
 	using get_entity_attached_to = rage::CDynamicEntity* (*)(rage::CDynamicEntity* entity);
+
+	using migrate_object = void (*)(CNetGamePlayer* player, rage::netObject* object, int type);
 }
