@@ -17,26 +17,26 @@ namespace big
 		};
 
 		static std::vector<outfit_t> components = {{0, "OUTFIT_HEAD"_T.data()},
-		    {1, "OUTFIT_BERD"_T.data()},
-		    {2, "OUTFIT_HAIR"_T.data()},
-		    {3, "OUTFIT_UPPR"_T.data()},
-		    {4, "OUTFIT_LOWR"_T.data()},
-		    {5, "OUTFIT_HAND"_T.data()},
-		    {6, "OUTFIT_FEET"_T.data()},
-		    {7, "OUTFIT_TEEF"_T.data()},
-		    {8, "OUTFIT_ACCS"_T.data()},
-		    {9, "OUTFIT_TASK"_T.data()},
-		    {10, "OUTFIT_DECL"_T.data()},
-		    {11, "OUTFIT_JBIB"_T.data()}};
+		    {1, "Outfit Berd"_T.data()},
+		    {2, "Outfit Hair"_T.data()},
+		    {3, "Outfit Upper"_T.data()},
+		    {4, "Outfit Lower"_T.data()},
+		    {5, "Outfit Hand"_T.data()},
+		    {6, "Outfit Feet"_T.data()},
+		    {7, "Outfit Teef"_T.data()},
+		    {8, "Outfit Accs"_T.data()},
+		    {9, "Outfit Task"_T.data()},
+		    {10, "Outfit DECL"_T.data()},
+		    {11, "Outfit JBIB"_T.data()}};
 		static std::vector<outfit_t> props      = {{0, "OUTFIT_HEAD"_T.data()},
-		         {1, "OUTFIT_GLASSES"_T.data()},
-		         {2, "OUTFIT_EARS"_T.data()},
-		         {3, "OUTFIT_UNK1"_T.data()},
-		         {4, "OUTFIT_UNK2"_T.data()},
-		         {5, "OUTFIT_UNK3"_T.data()},
-		         {6, "OUTFIT_WATCH"_T.data()},
-		         {7, "OUTFIT_WRIST"_T.data()},
-		         {8, "OUTFIT_UNK4"_T.data()}};
+		         {1, "Outfit Glasses"_T.data()},
+		         {2, "Outfit Ears"_T.data()},
+		         {3, "Outfit Unk1"_T.data()},
+		         {4, "Outfit Unk2"_T.data()},
+		         {5, "Outfit Unk3"_T.data()},
+		         {6, "Outfit Watch"_T.data()},
+		         {7, "Outfit Wrist"_T.data()},
+		         {8, "Outfit Unk4"_T.data()}};
 
 		g_fiber_pool->queue_job([] {
 			for (auto& item : components)
@@ -58,38 +58,38 @@ namespace big
 			}
 		});
 
-		components::button("OUTFIT_RANDOM_COMPONENT"_T, [] {
+		components::button("Random Component"_T, [] {
 			PED::SET_PED_RANDOM_COMPONENT_VARIATION(self::ped, 0);
 		});
 		ImGui::SameLine();
 
-		components::button("OUTFIT_DEFAULT_COMPONENT"_T, [] {
+		components::button("Default Component"_T, [] {
 			PED::SET_PED_DEFAULT_COMPONENT_VARIATION(self::ped);
 		});
 		ImGui::SameLine();
 
-		components::button("OUTFIT_RANDOM_PROPS"_T, [] {
+		components::button("Random Props"_T, [] {
 			PED::SET_PED_RANDOM_PROPS(self::ped);
 		});
 		ImGui::SameLine();
 
-		components::button("OUTFIT_CLEAR_PROPS"_T, [] {
+		components::button("Clear Props"_T, [] {
 			PED::CLEAR_ALL_PED_PROPS(self::ped, 1);
 		});
 		ImGui::SameLine();
 
-		components::button("EXPORT_TO_CLIPBOARD"_T, [] {
+		components::button("Export to Clipboard"_T, [] {
 			std::stringstream ss;
 			for (auto& item : components)
 				ss << item.id << " " << item.drawable_id << " " << item.texture_id << " ";
 			for (auto& item : props)
 				ss << item.id << " " << item.drawable_id << " " << item.texture_id << " ";
 			ImGui::SetClipboardText(ss.str().c_str());
-			g_notification_service->push("OUTFIT"_T.data(), "EXPORT_TO_CLIPBOARD"_T.data());
+			g_notification_service->push("OUTFIT"_T.data(), "Exported to Clipboard"_T.data());
 		});
 		ImGui::SameLine();
 
-		components::button("IMPORT_FROM_CLIPBOARD"_T, [] {
+		components::button("Import from Clipboard"_T, [] {
 			std::stringstream ss(ImGui::GetClipboardText());
 			for (auto& item : components)
 			{
@@ -135,7 +135,7 @@ namespace big
 		for (auto& item : components)
 		{
 			ImGui::SetNextItemWidth(60);
-			if (ImGui::InputInt(std::format("{} {} [0,{}]", item.label, "OUTFIT_TEX"_T, item.texture_id_max).c_str(), &item.texture_id, ImGuiInputTextFlags_None))
+			if (ImGui::InputInt(std::format("{} {} [0,{}]", item.label, "Outfit Tex"_T, item.texture_id_max).c_str(), &item.texture_id, ImGuiInputTextFlags_None))
 			{
 				g_fiber_pool->queue_job([item] {
 					PED::SET_PED_COMPONENT_VARIATION(self::ped, item.id, item.drawable_id, item.texture_id, PED::GET_PED_PALETTE_VARIATION(self::ped, item.id));
@@ -168,7 +168,7 @@ namespace big
 		for (auto& item : props)
 		{
 			ImGui::SetNextItemWidth(60);
-			if (ImGui::InputInt(std::format("{} {} [0,{}]", item.label, "OUTFIT_TEX"_T, item.texture_id_max).c_str(), &item.texture_id, ImGuiInputTextFlags_None))
+			if (ImGui::InputInt(std::format("{} {} [0,{}]", item.label, "Outfit Tex"_T, item.texture_id_max).c_str(), &item.texture_id, ImGuiInputTextFlags_None))
 			{
 				g_fiber_pool->queue_job([item] {
 					PED::SET_PED_PROP_INDEX(self::ped, item.id, item.drawable_id, item.texture_id, TRUE, 1);
@@ -191,7 +191,7 @@ namespace big
 		ImGui::InputText("##outfit_name", outfit_name, sizeof(outfit_name));
 		ImGui::SameLine();
 
-		components::button("OUTFIT_SAVE_CURRENT"_T, [] {
+		components::button("Save Current Outfit"_T, [] {
 			if (outfit_name[0] != '\0')
 			{
 				nlohmann::json j;
@@ -228,7 +228,7 @@ namespace big
 		});
 		ImGui::SameLine();
 
-		components::button("OUTFIT_APPLY_SELECTED"_T, [saved_outfits] {
+		components::button("Apply Selected Outfit"_T, [saved_outfits] {
 			if (selected_index >= 0 && selected_index < saved_outfits.size())
 			{
 				std::ifstream i(saved_outfit_path.get_file(saved_outfits[selected_index]).get_path());
@@ -261,7 +261,7 @@ namespace big
 		});
 		ImGui::SameLine();
 
-		components::button("OUTFIT_DELETE_SELECTED"_T, [saved_outfits] {
+		components::button("Delete Selected Outfit"_T, [saved_outfits] {
 			if (selected_index >= 0 && selected_index < saved_outfits.size())
 			{
 				std::filesystem::remove(saved_outfit_path.get_file(saved_outfits[selected_index]).get_path());
