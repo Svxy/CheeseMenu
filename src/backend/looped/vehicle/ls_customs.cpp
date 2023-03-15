@@ -15,8 +15,6 @@ namespace big
 	void looped::vehicle_ls_customs()
 	{
 		if (g.vehicle.ls_customs && g.vehicle.ls_customs != bLastLsCustoms)
-
-		if (g.vehicle.ls_customs && g.vehicle.ls_customs == state)
 		{
 			g_fiber_pool->queue_job([] {
 				scripts::request_script(RAGE_JOAAT("carmod_shop"));
@@ -51,7 +49,6 @@ namespace big
 					scr_functions::setup_modshop.populate_ip();
 
 					g_script_patcher_service->update();
-
 
 					scr_functions::setup_modshop.call_latent(g.m_modshop_thread, gta_util::find_script_program(RAGE_JOAAT("carmod_shop")), {45, 0, 18, 0}, bModshopReady);
 					*script_local(g.m_modshop_thread->m_stack, 730).at(446).as<int*>() = 2;
